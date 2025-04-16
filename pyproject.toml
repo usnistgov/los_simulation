@@ -1,0 +1,64 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "los-simulation"
+dynamic = ["version"]
+description = 'A repository to model line of site power models from one or more transmitters and receivers, includes antenna directivity.'
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "sandersa", email = "aric.sanders@nist.gov" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = ["matplotlib","numpy","scipy"]
+
+[project.urls]
+Documentation = "https://github.com/sandersa/los-simulation#readme"
+Issues = "https://github.com/sandersa/los-simulation/issues"
+Source = "https://github.com/sandersa/los-simulation"
+
+[tool.setuptools.package-data]
+los_simulation = ["los_simulation/resources/*"]
+
+[tool.hatch.version]
+path = "los_simulation/__init__.py"
+
+[tool.hatch.envs.types]
+extra-dependencies = [
+  "mypy>=1.0.0",
+]
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:los_simulation tests}"
+
+[tool.coverage.run]
+source_pkgs = ["los_simulation", "tests"]
+branch = true
+parallel = true
+omit = [
+  "los_simulation/__about__.py",
+]
+
+[tool.coverage.paths]
+los_simulation = ["los_simulation", "*/los-simulation/los_simulation"]
+tests = ["tests", "*/los-simulation/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
